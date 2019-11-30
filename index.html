@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Venados">
+	<title></title>
+	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="assets/css/app.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+	<div class="container container-bg" ng-app="App" ng-controller="AppController as ctrl" ng-init="ctrl.init();">
+  		
+		<div class="row">
+			<div class="col-12 mt-lg-5">
+				<figure>
+					<img src="assets/images/banner.jpg" class="img-fluid">
+				</figure>
+			</div>
+		</div>
+
+		<!--Home-->
+		<section ng-show="ctrl.pages.home">
+			<div class="row">
+				<div class="col-sm-6 col-xs-12 col-md-6 col-lg-4">
+					<div class="custom-submenu">
+						<div class="header-item">
+							<span class="card-img">
+								<img src="assets/images/home.png" class="img-thumbnail img-fluid">
+							</span>
+						</div>
+						<div class="custom-body text-center mt-3">
+							<h5 class="card-title text-uppercase font-weight-bold">Home</h5>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-xs-12 col-md-6 col-lg-4">
+					<div class="custom-submenu" ng-click="ctrl.goToStadisticsPage();">
+						<div class="header-item">
+							<span class="card-img">
+								<img src="assets/images/rising.png" class="img-thumbnail img-fluid">
+							</span>
+						</div>
+						<div class="custom-body text-center mt-3">
+							<h5 class="card-title text-uppercase font-weight-bold">Estad&iacute;sticas</h5>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6 col-xs-12 col-md-6 col-lg-4">
+					<div class="custom-submenu" ng-click="ctrl.goToPlayersPage();">
+						<div class="header-item">
+							<span class="card-img">
+								<img src="assets/images/team.png" class="img-thumbnail img-fluid">
+							</span>
+						</div>
+						<div class="custom-body text-center mt-3">
+							<h5 class="card-title text-uppercase font-weight-bold">Jugadores</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!--Stadistics-->
+		<section ng-show="ctrl.pages.stadistics">
+			<div class="row">
+				<div class="col-12">
+					<figure class="text-center">
+						<img src="assets/images/logo.png" class="img-fluid img-thumbnail" width="200px">
+					</figure>
+				</div>
+
+				<div class="col-2"></div>
+				<div class="col-4 text-center">
+					<div class="liga-body" ng-class="ctrl.gameTypes.copaTab">
+						<h4 class="text-uppercase font-weight-bold card-title" ng-click="ctrl.gameTypes.copaTab='active-div';ctrl.gameTypes.ascensoTab='inactive-div'">
+							Copa MX
+						</h4>
+					</div>
+				</div>
+				<div class="col-4 text-center">
+					<div class="liga-body" ng-class="ctrl.gameTypes.ascensoTab">
+						<h4 class="text-uppercase font-weight-bold card-title" ng-click="ctrl.gameTypes.ascensoTab='active-div';ctrl.gameTypes.copaTab='inactive-div'">
+							Ascenso MX
+						</h4>
+					</div>
+				</div>
+				<div class="col-2"></div>
+
+			</div>
+
+			<!--Copa-->
+			<div class="row mt-3" ng-show="ctrl.gameTypes.copaTab == 'active-div'">
+				<div class="col-2"></div>
+				<div class="col-8 container-stadistics-games p-0 color-white">
+					<div ng-repeat="games in ctrl.gameList.copa track by $index" ng-show="games !== undefined">
+						<div class="col-sm-12 p-0">
+							<div class="title-stadistics font-weight-bold p-2">
+								{{ games.month }}
+							</div>
+						</div>
+						<div class="row p-5" ng-repeat="game in games.games">
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center font-weight-bold">
+								<figure class="mt-3" ng-click="ctrl.programerGame(game);">
+									<img src="assets/images/calendar.png" class="img-fluid" width="30px">
+								</figure>
+								<div ng-show="game.programed">
+									<div>
+										{{ game.day }}
+									</div>
+									<div>
+										{{ game.datetime | date:'EEEE'}}
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center">
+								<img ng-src="{{ game.image }}" class="img-thumbnail" width="86px;" ng-show="game.local">
+								<img ng-src="{{ game.opponent_image }}" class="img-thumbnail" width="86px;" ng-show="!game.local">
+							</div>
+							<div class="col-sm-3 col-xs-3 col-md-3 col-lg-3 text-center font-weight-bold">
+								<div class="score-section">
+									<span ng-show="game.local">{{ game.home_score }} - {{ game.away_score }}</span>
+									<span ng-show="!game.local">{{ game.home_score }} - {{ game.away_score }}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center">
+								<img ng-src="{{ game.image }}" class="img-thumbnail" width="86px;" ng-show="!game.local">
+								<img ng-src="{{ game.opponent_image }}" class="img-thumbnail" width="86px;" ng-show="game.local">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2"></div>
+			</div>
+
+			<!--Ascenso-->
+			<div class="row mt-3" ng-show="ctrl.gameTypes.ascensoTab == 'active-div'">
+				<div class="col-2"></div>
+				<div class="col-8 container-stadistics-games p-0 color-white">
+					<div ng-repeat="games in ctrl.gameList.ascenso track by $index" ng-show="games !== undefined">
+						<div class="col-sm-12 p-0">
+							<div class="title-stadistics font-weight-bold p-2">
+								{{ games.month }}
+							</div>
+						</div>
+						<div class="row p-5" ng-repeat="game in games.games">
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center font-weight-bold">
+								<figure class="mt-3" ng-click="ctrl.programerGame(game);">
+									<img src="assets/images/calendar.png" class="img-fluid" width="30px">
+								</figure>
+								<div ng-show="game.programed">
+									<div>
+										{{ game.day }}
+									</div>
+									<div>
+										{{ game.datetime | date:'EEEE'}}
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center">
+								<img ng-src="{{ game.image }}" class="img-thumbnail" width="86px;" ng-show="game.local">
+								<img ng-src="{{ game.opponent_image }}" class="img-thumbnail" width="86px;" ng-show="!game.local">
+							</div>
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center font-weight-bold">
+								<div class="score-section">
+									<span ng-show="game.local">{{ game.home_score }} - {{ game.away_score }}</span>
+									<span ng-show="!game.local">{{ game.home_score }} - {{ game.away_score }}</span>
+								</div>
+							</div>
+							<div class="col-sm-12 col-xs-12 col-md-3 col-lg-3 text-center">
+								<img ng-src="{{ game.image }}" class="img-thumbnail" width="86px;" ng-show="!game.local">
+								<img ng-src="{{ game.opponent_image }}" class="img-thumbnail" width="86px;" ng-show="game.local">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-2"></div>
+			</div>
+
+			<div class="row mt-3">
+				<div class="col-12 text-center">
+					<a href="javascript:;" class="btn btn-primary" ng-click="ctrl.goToHomePage();">Regresar a Home</a>
+				</div>
+			</div>
+		</section>
+
+		<!--Players-->
+		<section ng-show="ctrl.pages.players">
+			<div class="row">
+				<div class="col-12">
+					<figure class="text-center">
+						<img src="assets/images/logo.png" class="img-fluid img-thumbnail" width="200px">
+					</figure>
+				</div>
+			</div>
+
+			<div class="row mt-3">
+				<!--Porteros-->
+				<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2 text-center" ng-repeat="player in ctrl.playerList.data.goalkeepers">
+					<figure ng-click="ctrl.shoProfilePlayer(player);" class="cursor-pointer">
+						<img ng-src="{{ player.image }}" class="img-thumbnail img-fluid">
+						<div class="font-weight-bold text-success">{{ player.position }}</div>
+						<div class="text-muted">{{ player.name }} {{ player.first_surname }} {{ player.second_surname }}</div>
+					</figure>
+				</div>
+			</div>
+
+			<div class="row">
+				<!--Defensas-->
+				<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2 text-center" ng-repeat="player in ctrl.playerList.data.defenses">
+					<figure ng-click="ctrl.shoProfilePlayer(player);" class="cursor-pointer">
+						<img ng-src="{{ player.image }}" class="img-thumbnail img-fluid">
+						<div class="font-weight-bold text-success">{{ player.position }}</div>
+						<div class="text-muted">{{ player.name }} {{ player.first_surname }} {{ player.second_surname }}</div>
+					</figure>
+				</div>
+			</div>
+
+			<div class="row">
+				<!--Centros-->
+				<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2 text-center" ng-repeat="player in ctrl.playerList.data.centers">
+					<figure ng-click="ctrl.shoProfilePlayer(player);" class="cursor-pointer">
+						<img ng-src="{{ player.image }}" class="img-thumbnail img-fluid">
+						<div class="font-weight-bold text-success">{{ player.position }}</div>
+						<div class="text-muted">{{ player.name }} {{ player.first_surname }} {{ player.second_surname }}</div>
+					</figure>
+				</div>
+			</div>
+
+			<div class="row">
+				<!--Delanteros-->
+				<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2 text-center" ng-repeat="player in ctrl.playerList.data.forwards">
+					<figure ng-click="ctrl.shoProfilePlayer(player);" class="cursor-pointer">
+						<img ng-src="{{ player.image }}" class="img-thumbnail img-fluid">
+						<div class="font-weight-bold text-success">{{ player.position }}</div>
+						<div class="text-muted">{{ player.name }} {{ player.first_surname }} {{ player.second_surname }}</div>
+					</figure>
+				</div>
+			</div>
+
+			<div class="row">
+				<!--Tecnicos-->
+				<div class="col-sm-12 col-xs-12 col-md-2 col-lg-2 text-center" ng-repeat="player in ctrl.playerList.data.coaches">
+					<figure ng-click="ctrl.shoProfilePlayer(player);" class="cursor-pointer">
+						<img ng-src="{{ player.image }}" class="img-thumbnail img-fluid">
+						<div class="font-weight-bold text-success">{{ player.role }}</div>
+						<div class="text-muted">{{ player.name }} {{ player.first_surname }} {{ player.second_surname }}</div>
+					</figure>
+				</div>
+			</div>
+
+			<div class="row mt-3">
+				<div class="col-12 text-center">
+					<a href="javascript:;" class="btn btn-primary" ng-click="ctrl.goToHomePage();">Regresar a Home</a>
+				</div>
+			</div>
+			<br>
+		</section>
+
+		<div class="row">
+			<div class="col-12 mt-lg-5">
+				<figure>
+					<img src="assets/images/app.jpg" class="img-fluid">
+				</figure>
+			</div>
+		</div>
+
+		<div id="modal-profile" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel">Ficha Tecnica</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-12 text-center">
+								<figure>
+									<img ng-src="{{ ctrl.player.image }}" class="img-thumbnail img-fluid rounded-circle" width="150px">
+									<div class="font-weight-bold text-success" ng-show="ctrl.player.position">{{ ctrl.player.position }}</div>
+									<div class="font-weight-bold text-success" ng-show="ctrl.player.role">{{ ctrl.player.role }}</div>
+									<div class="text-muted">{{ ctrl.player.name }} {{ ctrl.player.first_surname }} {{ ctrl.player.second_surname }}</div>
+								</figure>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-12 text-center">
+								<h6 class="text-uppercase card-subtitle">Fecha de nacimiento</h6>
+								<div class="text-muted">{{ ctrl.player.birthday | date:'dd/MM/yyyy' }}</div>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-12 text-center">
+								<h6 class="text-uppercase card-subtitle">Lugar de nacimiento</h6>
+								<div class="text-muted">{{ ctrl.player.birth_place }}</div>
+							</div>
+						</div>
+						<div class="row mt-3" ng-show="ctrl.player.position">
+							<div class="col-12 text-center">
+								<h6 class="text-uppercase card-subtitle">Peso</h6>
+								<div class="text-muted">{{ ctrl.player.weight }} KG</div>
+							</div>
+						</div>
+						<div class="row mt-3" ng-show="ctrl.player.position">
+							<div class="col-12 text-center">
+								<h6 class="text-uppercase card-subtitle">Altura</h6>
+								<div class="text-muted">{{ ctrl.player.height }} M</div>
+							</div>
+						</div>
+						<div class="row mt-3" ng-show="ctrl.player.position">
+							<div class="col-12 text-center">
+								<h6 class="text-uppercase card-subtitle">Equipo Anterior</h6>
+								<div class="text-muted">{{ ctrl.player.last_team }}</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+<script src="assets/plugins/jquery/jquery-3.4.1.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/plugins/angular/angular.min.js"></script>
+<script src="assets/js/AppController.js"></script>
+<script src="assets/js/AppProvider.js"></script>
+</body>
+</html>

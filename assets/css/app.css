@@ -1,0 +1,67 @@
+body {
+	background-image: url(../images/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Geneva, Arial, Helvetica, sans-serif;
+    background-attachment: fixed;
+}
+
+.custom-submenu {
+    width: 70%;
+    margin: auto;
+    box-shadow: 1px 5px 10px;
+    border-radius: 10px;
+    min-height: 350px !important;
+    cursor: pointer;
+}
+
+.container-bg {
+    background-color: #FFF !important;
+}
+
+.container-stadistics {
+    width: 70%;
+    margin: auto;
+    box-shadow: 1px 5px 10px;
+    border-radius: 10px;
+    min-height: 500px !important;
+}
+
+.liga-body {
+    margin: auto;
+    border: 1px solid #000000;
+    cursor: pointer;
+}
+
+.active-div {
+    border: 5px solid #60a55e;
+}
+
+.inactive-div {
+    background-color: #f4f5f8 !important;
+    opacity: 0.4;
+}
+
+.container-stadistics-games {
+    border: 1px solid #cdcdce;
+    box-shadow: 1px 5px 10px;
+    background: #60a55e;
+}
+
+.title-stadistics {
+    color: white;
+    background: #afafaf;
+}
+
+.color-white {
+    color: white !important;
+}
+
+.score-section {
+    margin: auto;
+    font-size: 50px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
